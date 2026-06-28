@@ -1,0 +1,75 @@
+# =========================================================================
+# 1. 개인정보 및 핵심 설정 파일 (★가장 중요★)
+# =========================================================================
+# 데이터베이스 계정, API 키 등이 포함된 설정 파일은 절대 올리면 안 됩니다.
+# 필요 시 application-dev.yml 처럼 분리해서 로컬 전용은 제외하세요.
+**/src/main/resources/application-local.properties
+**/src/main/resources/application-local.yml
+**/src/main/resources/application-secret.properties
+**/src/main/resources/application-secret.yml
+
+# 환경변수 파일 및 암호키
+.env
+.env.local
+*.pem
+*.jks
+
+# =========================================================================
+# 2. 빌드 결과물 및 의존성 (Build & Package)
+# =========================================================================
+# Gradle 빌드 결과물
+.gradle/
+build/
+
+# Maven 빌드 결과물
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.nextDevelopmentVersion
+pom.xml.war
+pom.xml.ear
+pom.xml.bundle
+pom.xml.shade
+
+# 로그 파일
+*.log
+
+# =========================================================================
+# 3. 개발 툴 설정 파일 (IDE Configs)
+# =========================================================================
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.metadata/
+.classpath
+.project
+.settings/
+*.launch
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+
+# =========================================================================
+# 4. 운영체제 시스템 파일
+# =========================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Ehthumbs.db
+Desktop.ini

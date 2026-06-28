@@ -1,0 +1,37 @@
+server:
+  port: 18080
+
+spring:
+  application:
+    name: week8-board-cache
+  datasource:
+    url: jdbc:mariadb://localhost:3306/week5_board
+    username: root
+    password: password
+    driver-class-name: org.mariadb.jdbc.Driver
+  data:
+    redis:
+      host: host
+      port: default
+      password : password
+      timeout: 2s
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60s
+      cache-null-values: false
+      use-key-prefix: true
+      key-prefix: "week8:"
+
+logging:
+  level:
+    p6spy: INFO
+    org.springframework.cache: DEBUG

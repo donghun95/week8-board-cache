@@ -1,0 +1,39 @@
+### 8주차 캐시: 인기 게시글 목록 (첫 호출 - DB 조회 + Redis 저장)
+GET http://localhost:18080/api/boards/popular
+
+### 8주차 캐시: 인기 게시글 목록 (두 번째 호출 - Redis hit, SQL 없음)
+GET http://localhost:18080/api/boards/popular
+
+### 8주차 캐시: 새 글 등록 - 인기 목록 캐시 무효화
+POST http://localhost:18080/api/boards
+Content-Type: application/json
+
+{
+  "title": "캐시 무효화 테스트",
+  "content": "Repository save() 후 board:popular 캐시를 비웁니다.",
+  "writer": "donghun"
+}
+
+### 8주차 캐시: 등록 직후 다시 호출 - cache miss, DB 재조회
+GET http://localhost:18080/api/boards/popular
+
+### 8주차 조회수: Redis INCR 방식 (1번 호출)
+POST http://localhost:18080/api/boards/1/views/redis
+
+### 8주차 조회수: Redis INCR 방식 (2번 호출)
+POST http://localhost:18080/api/boards/1/views/redis
+
+### 8주차 조회수: Redis 현재 누적값 확인
+GET http://localhost:18080/api/boards/1/views/redis
+
+### 8주차 조회수: 스케줄러 강제 동기화 (관리자용)
+POST http://localhost:18080/api/admin/views/flush
+
+### 8주차 조회수: flush 이후 Redis 누적값은 0
+GET http://localhost:18080/api/boards/1/views/redis
+
+### 8주차 DB 확인: 단건 조회에서 views 증가분 확인
+GET http://localhost:18080/api/boards/1
+
+### Swagger UI (REST Client에서는 redirect 없이 최종 URL 호출)
+GET http://localhost:18080/swagger-ui/index.html
