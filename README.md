@@ -11,7 +11,8 @@
 - 게시글 생성/수정/삭제/조회수 flush 시 인기 게시글 캐시를 무효화합니다.
 - 조회수 증가는 Redis `INCR`로 누적하고, DB에는 `GETDEL` + JPQL update로 일괄 반영합니다.
 
-## 주요 파일
+## 주요 파일<img width="1160" height="104" alt="스크린샷 2026-06-20 160856" src="https://github.com/user-attachments/assets/968dc325-ab64-407b-8d26-a419b74f1b3a" />
+
 
 - `src/main/java/com/dsa/week5board/config/RedisCacheConfig.java`
 - `src/main/java/com/dsa/week5board/board/service/BoardCacheService.java`
@@ -58,16 +59,18 @@ redis insight에 연결해서 확인 해보았습니다.
 비교 포인트 1번과 2번 내용
 get 으로 조회를 연달아 했을때 첫번째에서는 redis에 저장을 시키고  
 두번째 조회시 Redis hit으로 sql 조회 없이 결과값을 보여준다.
-<img width="1160" height="104" alt="스크린샷 2026-06-20 160856" src="https://github.com/user-attachments/assets/e3ce23df-246c-4e98-acc5-e77a8359a285" />
+<img width="1160" height="104" alt="스크린샷 2026-06-20 160856" src="https://github.com/user-attachments/assets/3c87e2f9-cf81-4db0-ad68-1acfe041a96b" />
+
 비교 포인트 3번 내용
 새글 등록시 캐시는 무효화 되고 조회시 DB를 재조회 하는 것을 확인 할 수 있다.
-<img width="1166" height="191" alt="스크린샷 2026-06-20 164701" src="https://github.com/user-attachments/assets/82407b8a-2af7-4a75-af12-2a6542f8fce2" />
+<img width="1166" height="191" alt="스크린샷 2026-06-20 164701" src="https://github.com/user-attachments/assets/38803650-dd61-4881-9954-670cd923b1e4" />
+
 
 비교 포인트 4번 내용
 opsForValue().increment() 한 줄로 Redis INCR 명령이 나감. 원자적이라 여러 요청이
 동시에 들어와도 lost update 없음 (5주차 ViewCountRaceDemo 의 lost update가 여기서는
 발생 X)
-<img width="1207" height="289" alt="스크린샷 2026-06-20 161259" src="https://github.com/user-attachments/assets/0f47cd3a-2aa4-4401-ba67-0f524f26e772" />
+<img width="1207" height="289" alt="스크린샷 2026-06-20 161259" src="https://github.com/user-attachments/assets/f334d9d9-72f7-40fa-bc06-b9b26546a2ac" />
 비교 포인트 7번 내용
 
 getAndDelete() 는 Redis GETDEL   
@@ -77,7 +80,7 @@ GETDEL 은 그게 없습니다.
 DB 반영은 views = views + delta . 누적값 덮어쓰기 절대 X.
 flush 후 인기 캐시 evict  
 Redis 카운터와 인기 게시글 캐시의 일관성을 맞춰주는 부분.
-<img width="1177" height="163" alt="스크린샷 2026-06-20 161453" src="https://github.com/user-attachments/assets/119c6f6b-fa35-4352-a744-3128e22daa55" />
+<img width="1177" height="163" alt="스크린샷 2026-06-20 161453" src="https://github.com/user-attachments/assets/654fe79f-a71b-45a5-b7cd-062024eddf9d" />
 
 ## 내용 정리
 Cache-Aside / Write-Through / Write-Behind 차이
